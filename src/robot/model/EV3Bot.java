@@ -4,7 +4,6 @@ import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
-import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 import robot.controller.BotController;
 import lejos.robotics.chassis.Chassis;
@@ -19,8 +18,16 @@ private int xPosition;
 private int yPosition;
 private long waitTime;
 
+/*
+ * Driving
+ */
+
 private MovePilot botPilot;
+/*
+ * Sample Section
+ */
 private EV3UltrasonicSensor distanceSensor;
+private float [] ultrasonicSamples;
 
 public EV3Bot()
 {
@@ -30,8 +37,11 @@ public EV3Bot()
 	this.yPosition = 50;
 	this.waitTime = 4000;
 	
-	
+	/*
+	 * LocalEV3.get gets the robot I am connected to
+	 */
 	distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
+	distanceSensor.enable();
 	setupPilot();
 	displayMessage();
 }
@@ -48,13 +58,15 @@ public EV3Bot()
 
 	public void driveRoom()
 	{
-		if(distanceSensor.getDistanceMode().[0] < 2)
+		ultrasonicSamples = new float [distanceSensor.sampleSize()];
+		distanceSensor.fetchSample(ultrasonicSamples, 0);
+		if(ultrasonicSamples[0] < 5) //2.5 is NOT! a real value, figure out a better one
 		{
-			
+			botPilot.travel(23.00);
 		}
 		else
 		{
-			
+			botPilot.travel(24.00);
 		}
 		
 		//call private helper method here
