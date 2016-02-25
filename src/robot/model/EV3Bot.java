@@ -50,8 +50,8 @@ public EV3Bot()
 	{
 //	Wheel wheel1 = DifferentialChassis.modelWheel(Motro.A, 43.2).offset(-72);
 
-		Wheel leftWheel = WheeledChassis.modelWheel(Motor.A, 43.2).offset(-72);
-		Wheel rightWheel = WheeledChassis.modelWheel(Motor.B, 43.2).offset(72);
+		Wheel leftWheel = WheeledChassis.modelWheel(Motor.A, 55.0).offset(-72);
+		Wheel rightWheel = WheeledChassis.modelWheel(Motor.B, 55.0).offset(72);
 		Chassis baseChassis = new WheeledChassis(new Wheel []{leftWheel, rightWheel}, WheeledChassis.TYPE_DIFFERENTIAL);
 		botPilot = new MovePilot(baseChassis);
 	}
