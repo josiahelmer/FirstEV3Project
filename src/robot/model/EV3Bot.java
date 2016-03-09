@@ -64,6 +64,26 @@ private void driveLong()
 	botPilot.travel(1250);
 
 }
+private void driveAround()
+{
+	while(LocalEV3.get().getKeys().waitForAnyPress() != LocalEV3.get().getKeys().ID_ESCAPE)
+	{
+		double distance = (Math.random() * 100) % 23;
+		double angle = (Math.random() * 360);
+		boolean isPostive = ((int) (Math.random() * 2) % 2 == 0);
+		distanceSensor.fetchSample(ultrasonicSamples, 0);
+		if(ultrasonicSamples[0] < 17)
+		{
+			botPilot.travel(-distance);
+			botPilot.rotate(-angle);
+		}
+		else
+		{
+			botPilot.rotate(-angle);
+			botPilot.travel(distance);
+		}
+	}
+}
 
 	private void setupPilot()
 	{
