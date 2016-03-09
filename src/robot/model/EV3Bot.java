@@ -18,6 +18,7 @@ private int xPosition;
 private int yPosition;
 private long waitTime;
 
+
 /*
  * Driving
  */
@@ -45,6 +46,24 @@ public EV3Bot()
 	setupPilot();
 	displayMessage();
 }
+private void driveShort()
+{
+	botPilot.travel(3000.00);
+	botPilot.rotate(-90);
+	botPilot.travel(6000.00);
+}
+
+private void driveLong()
+{
+	botPilot.travel(4600.00);
+	botPilot.rotate(-90);
+	botPilot.travel(7200.00);
+	botPilot.rotate(90);
+	botPilot.travel(3400);
+	botPilot.rotate(-90);
+	botPilot.travel(1250);
+
+}
 
 	private void setupPilot()
 	{
@@ -60,13 +79,15 @@ public EV3Bot()
 	{
 		ultrasonicSamples = new float [distanceSensor.sampleSize()];
 		distanceSensor.fetchSample(ultrasonicSamples, 0);
-		if(ultrasonicSamples[0] < 5) //2.5 is NOT! a real value, figure out a better one
+		if(ultrasonicSamples[0] < 10) //2.5 is NOT! a real value, figure out a better one
 		{
 			botPilot.travel(23.00);
+			driveShort();
 		}
 		else
 		{
 			botPilot.travel(24.00);
+			driveLong();
 		}
 		
 		//call private helper method here
@@ -86,6 +107,7 @@ public EV3Bot()
 	{
 		LCD.drawString(botMessage,  xPosition,  yPosition);
 		Delay.msDelay(waitTime);
+		LCD.clear();
 	}
 
 //write your first drive method here
