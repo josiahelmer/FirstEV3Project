@@ -3,7 +3,7 @@ package robot.model;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
-import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.sensor.*;
 import lejos.utility.Delay;
 import robot.controller.BotController;
 import lejos.robotics.chassis.Chassis;
@@ -28,6 +28,7 @@ private MovePilot botPilot;
  * Sample Section
  */
 private EV3UltrasonicSensor distanceSensor;
+private EV3TouchSensor backTouch;
 private float [] ultrasonicSamples;
 
 public EV3Bot()
@@ -42,6 +43,7 @@ public EV3Bot()
 	 * LocalEV3.get gets the robot I am connected to
 	 */
 	distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
+	backTouch = new EV3TouchSensor(LocalEV3.get().getPort("S2"));
 	distanceSensor.enable();
 	setupPilot();
 	displayMessage();
